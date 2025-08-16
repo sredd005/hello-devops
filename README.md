@@ -1,3 +1,2 @@
 # hello-devops
-devops practice
-CI build test
+i like devops
