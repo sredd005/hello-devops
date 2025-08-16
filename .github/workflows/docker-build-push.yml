@@ -1,4 +1,4 @@
-name: Build and Push Docker image
+name: Build and Push (Debug)
 
 on:
   push:
@@ -26,20 +26,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Sanity check: this will fail fast if not logged in (401 here means creds issue)
-      - name: Sanity check - auth to registry
-        run: |
-          echo "Testing auth by pulling a public image and then whoami via /v2 token..."
-          docker pull hello-world:latest
-          curl -fsSL -u "${{ secrets.DOCKERHUB_USERNAME }}:${{ secrets.DOCKERHUB_TOKEN }}" \
-            "https://auth.docker.io/token?service=registry.docker.io&scope=repository:library/hello-world:pull" > /dev/null
-          echo "Auth check OK"
+      # ✅ Prove we are authenticated; 'Username:' should show your account
+      - name: Show Docker login identity
+        run: docker info | grep -i "Username" || true
 
+      # ✅ Try a simple push using a public base image retagged to your namespace
+      - name: Sanity push - retag alpine and push
+        run: |
+          docker pull alpine:3.19
+          docker tag alpine:3.19 saireddy023/hello-devops-sf:tmp
+          docker push saireddy023/hello-devops-sf:tmp
+
+      # If the sanity push works, our creds/namespace are good. Now push your app image.
       - name: Extract short SHA
         id: vars
         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
-      - name: Build and push (linux/amd64)
+      - name: Build and push app image
         uses: docker/build-push-action@v6
         with:
           context: .
