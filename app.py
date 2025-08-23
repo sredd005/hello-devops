@@ -15,4 +15,5 @@ if __name__ == "__main__":
     # Flask’s built-in server for a simple demo
     host = os.getenv("FLASK_HOST", "0.0.0.0")
     port = int(os.getenv("FLASK_PORT", "5000"))
-    app.run(host=host, port=port, debug=False)
+    debug = os.getenv("FLASK_DEBUG", "False").lower() == "true"
+    app.run(host=host, port=port, debug=debug)
