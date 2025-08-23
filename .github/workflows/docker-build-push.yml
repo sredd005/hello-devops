@@ -40,4 +40,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # (In Step 2 we'll add a commit-back step that updates k8s/deployment.yaml to the new SHA)
+      - name: Update deployment image
+        run: |
+          sed -i "s|image: saireddy023/hello-devops-sf:.*|image: saireddy023/hello-devops-sf:${{ env.SHORT_SHA }}|" k8s/deployment.yaml
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add k8s/deployment.yaml
+          git commit -m "Update image to ${{ env.SHORT_SHA }}" || exit 0
+          git push

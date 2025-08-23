@@ -16,7 +16,7 @@ spec:
       containers:
       - name: web
         image: saireddy023/hello-devops-sf:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
 
