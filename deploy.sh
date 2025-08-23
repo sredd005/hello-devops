@@ -25,6 +25,10 @@ kubectl create namespace hello --dry-run=client -o yaml | kubectl apply -f -
 echo "Deploying to Kubernetes..."
 kubectl apply -f k8s/
 
+# Force pod recreation to use new image
+echo "Forcing pod recreation..."
+kubectl delete pods -n hello -l app=hello-devops-sf
+
 # Wait for deployment to be ready
 echo "Waiting for deployment to be ready..."
 kubectl wait --for=condition=available --timeout=300s deployment/hello-devops-sf -n hello

@@ -2,7 +2,9 @@
 
 # Build the Docker image
 build:
-	eval $$(minikube docker-env) && docker build -t saireddy023/hello-devops-sf:latest .
+	$(eval TAG := $(shell date +%s))
+	eval $$(minikube docker-env) && docker build -t saireddy023/hello-devops-sf:$(TAG) .
+	kubectl set image deployment/hello-devops-sf web=saireddy023/hello-devops-sf:$(TAG) -n hello
 
 # Deploy to Kubernetes
 deploy:
