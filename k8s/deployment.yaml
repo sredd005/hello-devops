@@ -20,8 +20,8 @@ spec:
         ports:
         - containerPort: 5000
         env:
-        - name: FLASK_HOST
-          value: "0.0.0.0"
+        - name: CONTAINER_ENV
+          value: "true"
         - name: FLASK_PORT
           value: "5000"
         resources:

@@ -13,7 +13,9 @@ def healthz():
 
 if __name__ == "__main__":
     # Flask’s built-in server for a simple demo
-    host = os.getenv("FLASK_HOST", "0.0.0.0")
+    # Use 127.0.0.1 for development, 0.0.0.0 for containers
+    is_container = os.getenv("CONTAINER_ENV", "false").lower() == "true"
+    host = "0.0.0.0" if is_container else "127.0.0.1"
     port = int(os.getenv("FLASK_PORT", "5000"))
     debug = os.getenv("FLASK_DEBUG", "False").lower() == "true"
     app.run(host=host, port=port, debug=debug)
