@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-devops-sf
+  namespace: hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-devops-sf
+  template:
+    metadata:
+      labels:
+        app: hello-devops-sf
+    spec:
+      containers:
+      - name: web
+        image: saireddy023/hello-devops-sf:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        readinessProbe:
+          httpGet: { path: /healthz, port: 5000 }
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet: { path: /healthz, port: 5000 }
+          initialDelaySeconds: 10
+          periodSeconds: 10
