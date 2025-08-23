@@ -13,22 +13,13 @@ spec:
       labels:
         app: hello-devops-sf
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        fsGroup: 1000
       containers:
       - name: web
         image: saireddy023/hello-devops-sf:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
-        securityContext:
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: false
-          capabilities:
-            drop:
-            - ALL
+
         resources:
           requests:
             memory: "64Mi"
