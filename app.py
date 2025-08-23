@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Hello DevOps v2 from Salesforce Mini-Platform!"
+    return "Hello DevOps v2 from Salesforce Mini-Platform!I like dosa."
 
 @app.route("/healthz")
 def healthz():
