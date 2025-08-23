@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: saireddy023/hello-devops-sf:latest
+        image: saireddy023/hello-devops-sf:a26aa18
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
