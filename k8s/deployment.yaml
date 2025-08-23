@@ -13,6 +13,10 @@ spec:
       labels:
         app: hello-devops-sf
     spec:
+      restartPolicy: Always
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
       - name: web
         image: saireddy023/hello-devops-sf:latest
@@ -44,3 +48,6 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
           failureThreshold: 6
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
